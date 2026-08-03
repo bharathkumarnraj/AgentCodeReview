@@ -1,17 +1,46 @@
-from datetime import datetime
-
-from config.settings import settings
-from utils.logger import get_logger
-
-logger = get_logger(__name__)
+from orchestrator.agent_orchestrator import AgentOrchestrator
 
 
 def main():
-    logger.info("=" * 50)
-    logger.info(f"Project : {settings.PROJECT_NAME}")
-    logger.info(f"Version : {settings.VERSION}")
-    logger.info(f"Started : {datetime.now()}")
-    logger.info("=" * 50)
+
+    sample_code = """
+x = None
+
+print(x.upper())
+"""
+
+    orchestrator = AgentOrchestrator()
+
+    result = orchestrator.run(sample_code)
+
+    review = result["review"]
+
+    repaired_code = result["repaired_code"]
+    review_time = result["review_time"]
+
+    repair_time = result["repair_time"]
+
+    print("\n====================================")
+    print("         REVIEW AGENT")
+    print("====================================")
+
+    print(f"Severity    : {review.severity}")
+    print(f"Issue       : {review.issue}")
+    print(f"Explanation : {review.explanation}")
+    print(f"Suggestion  : {review.suggestion}")
+
+    print("\n====================================")
+    print("         REPAIR AGENT")
+    print("====================================")
+
+    print(repaired_code)
+    print("\n====================================")
+    print(" PERFORMANCE")
+    print("====================================")
+
+    print(f"Review Agent Time : {review_time:.3f} seconds")
+
+    print(f"Repair Agent Time : {repair_time:.3f} seconds")
 
 
 if __name__ == "__main__":
