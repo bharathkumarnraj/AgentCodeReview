@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>AI Code Review Report</title>
+
+<style>
+
+body{
+    font-family:Segoe UI,Arial,sans-serif;
+    background:#eef2f7;
+    margin:0;
+    padding:30px;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+}
+
+h1{
+    color:#1f3b63;
+}
+
+h2{
+    color:#1f3b63;
+    border-bottom:3px solid #2d8cff;
+    padding-bottom:8px;
+    margin-top:40px;
+}
+
+.dashboard{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    margin-top:25px;
+    margin-bottom:30px;
+}
+
+.card{
+    flex:1;
+    background:white;
+    border-radius:10px;
+    text-align:center;
+    padding:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+}
+
+.card h3{
+    margin:0;
+    color:#666;
+}
+
+.card p{
+    font-size:34px;
+    color:#0078ff;
+    font-weight:bold;
+}
+
+.score{
+    font-size:42px;
+    color:green;
+    font-weight:bold;
+}
+
+.grade{
+    font-size:30px;
+    color:#0078ff;
+    font-weight:bold;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:35px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:12px;
+}
+
+th{
+    width:180px;
+    background:#2d8cff;
+    color:white;
+}
+
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:20px;
+    border-radius:10px;
+    overflow:auto;
+}
+
+.low{
+    background:#d4edda;
+    color:#155724;
+    padding:6px 14px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.warning{
+    background:#fff3cd;
+    color:#856404;
+    padding:6px 14px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.high{
+    background:#f8d7da;
+    color:#721c24;
+    padding:6px 14px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.footer{
+    text-align:center;
+    color:gray;
+    margin-top:50px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AI Code Review Report</h1>
+
+<p>
+Generated :
+2026-08-04 12:09:17.642738
+</p>
+
+<h2>Dashboard</h2>
+
+<div class="dashboard">
+
+<div class="card">
+<h3>Review</h3>
+<p>70</p>
+</div>
+
+<div class="card">
+<h3>Security</h3>
+<p>70</p>
+</div>
+
+<div class="card">
+<h3>Performance</h3>
+<p>70</p>
+</div>
+
+<div class="card">
+<h3>Documentation</h3>
+<p>70</p>
+</div>
+
+</div>
+
+<h2>Overall Score</h2>
+
+<p class="score">
+70/100
+</p>
+
+<p class="grade">
+Grade : B
+</p>
+
+<h2>🔍 Review Agent</h2>
+
+
+<table>
+
+<tr>
+<th>Severity</th>
+<td>
+
+<span class="high">
+high
+</span>
+
+</td>
+</tr>
+
+<tr>
+<th>Issue</th>
+<td>division by zero</td>
+</tr>
+
+<tr>
+<th>Explanation</th>
+<td>Dividing a number by zero will result in a runtime error and your program will crash.</td>
+</tr>
+
+<tr>
+<th>Suggestion</th>
+<td>Handle the division operation to avoid zero division. Use a conditional statement to check if the divisor is zero before performing the division.</td>
+</tr>
+
+</table>
+
+
+<h2>🔒 Security Agent</h2>
+
+
+<table>
+
+<tr>
+<th>Severity</th>
+<td>
+
+<span class="high">
+HIGH
+</span>
+
+</td>
+</tr>
+
+<tr>
+<th>Issue</th>
+<td>Division by zero error</td>
+</tr>
+
+<tr>
+<th>Explanation</th>
+<td>The code attempts to divide an integer by zero, which is undefined and will cause a runtime exception. This can lead to application crashes or unhandled exceptions.</td>
+</tr>
+
+<tr>
+<th>Suggestion</th>
+<td>Ensure that the divisor (b) is not zero before performing the division operation. You should add a check to prevent division by zero. For example: 
+
+```python
+if b != 0:
+    print(a / b)
+else:
+    print('Error: Division by zero')
+```
+This will handle the situation gracefully and avoid runtime errors.</td>
+</tr>
+
+</table>
+
+
+<h2>⚡ Performance Agent</h2>
+
+
+<table>
+
+<tr>
+<th>Severity</th>
+<td>
+
+<span class="high">
+High
+</span>
+
+</td>
+</tr>
+
+<tr>
+<th>Issue</th>
+<td>Division by zero error</td>
+</tr>
+
+<tr>
+<th>Explanation</th>
+<td>The code attempts to perform a division operation where the divisor is zero, which will result in a runtime error (specifically, a ZeroDivisionError). This is not related to performance but is crucial for understanding the context before analyzing other potential issues.</td>
+</tr>
+
+<tr>
+<th>Suggestion</th>
+<td>Ensure that the denominator `b` is not zero before performing the division. You can add a check or handle this case appropriately.</td>
+</tr>
+
+</table>
+
+
+<h2>📘 Documentation Agent</h2>
+
+
+<table>
+
+<tr>
+<th>Severity</th>
+<td>
+
+<span class="high">
+High
+</span>
+
+</td>
+</tr>
+
+<tr>
+<th>Issue</th>
+<td>Potential Division by Zero Error and Lack of Documentation</td>
+</tr>
+
+<tr>
+<th>Explanation</th>
+<td>The code does not handle the division by zero case, which will raise an exception. Additionally, there is no documentation or comments explaining what the code does or why it exists.</td>
+</tr>
+
+<tr>
+<th>Suggestion</th>
+<td>Add a docstring to describe the purpose of the script. Introduce error handling to manage the division by zero scenario and use more descriptive variable names for clarity.</td>
+</tr>
+
+</table>
+
+
+<h2>🛠 Repaired Code</h2>
+
+<pre>
+try:
+    print(a / b)
+except ZeroDivisionError:
+    pass
+</pre>
+
+<h2>📈 Execution Metrics</h2>
+
+<table>
+
+<tr>
+<th>Metric</th>
+<th>Time</th>
+</tr>
+
+<tr>
+<td>Review</td>
+<td>436.36 sec</td>
+</tr>
+
+<tr>
+<td>Security</td>
+<td>379.23 sec</td>
+</tr>
+
+<tr>
+<td>Performance</td>
+<td>298.85 sec</td>
+</tr>
+
+<tr>
+<td>Documentation</td>
+<td>144.15 sec</td>
+</tr>
+
+<tr>
+<td>Repair</td>
+<td>24.48 sec</td>
+</tr>
+
+<tr>
+<td><b>Total</b></td>
+<td><b>460.97 sec</b></td>
+</tr>
+
+</table>
+
+<div class="footer">
+
+<hr>
+
+<h3>Generated by AI Code Review Assistant</h3>
+
+Powered by Ollama + Qwen2.5
+
+</div>
+
+</div>
+
+</body>
+
+</html>
+

@@ -1,55 +1,88 @@
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 from metrics.timer import Timer
-from services.review_agent import ReviewAgent
-from services.repair_agent import RepairAgent
-from logger.file_logger import logger
+from registry.agent_registry import AgentRegistry
+from scoring.quality_score import QualityScore
 
 
 class AgentOrchestrator:
 
     def __init__(self):
-        self.review_agent = ReviewAgent()
-        self.repair_agent = RepairAgent()
+        self.registry = AgentRegistry()
 
-    def run(self, code: str):
+    def run_agent(self, agent_name, code):
+        timer = Timer()
+        timer.start()
 
-        review_timer = Timer()
-        review_timer.start()
+        result = self.registry.get(agent_name).execute(code)
 
-        review = self.review_agent.execute(code)
+        timer.stop()
 
-        review_timer.stop()
+        return result, timer.elapsed
 
-        repair_time = 0.0
+    def run(self, code):
 
-        if review.issue.strip().lower() in [
-            "",
-            "none",
-            "no issue",
-            "no issues",
-            "no bug",
-        ]:
+        results = {}
 
-            repaired_code = "No repair required."
+        analysis_agents = [
+            "review",
+            "security",
+            "performance",
+            "documentation"
+        ]
 
-        else:
+        with ThreadPoolExecutor(max_workers=len(analysis_agents)) as executor:
 
-            repair_timer = Timer()
-            repair_timer.start()
+            future_to_agent = {
+                executor.submit(self.run_agent, agent, code): agent
+                for agent in analysis_agents
+            }
 
-            repaired_code = self.repair_agent.execute(code)
+            for future in as_completed(future_to_agent):
 
-            repair_timer.stop()
+                agent = future_to_agent[future]
 
-            repair_time = repair_timer.elapsed
-            logger.info(f"Severity      : {review.severity}")
-            logger.info(f"Issue         : {review.issue}")
-            logger.info(f"Review Time   : {review_timer.elapsed:.3f}")
-            logger.info(f"Repair Time   : {repair_time:.3f}")
-            logger.info("-" * 60)
+                try:
+                    result, elapsed = future.result()
 
-        return {
-            "review": review,
-            "repaired_code": repaired_code,
-            "review_time": review_timer.elapsed,
-            "repair_time": repair_time
-        }
+                    results[agent] = result
+                    results[f"{agent}_time"] = elapsed
+
+                except Exception as ex:
+                    print(f"{agent} agent failed: {ex}")
+
+        # -----------------------------
+        # Run Repair Agent
+        # -----------------------------
+        repair_result, repair_time = self.run_agent("repair", code)
+
+        results["repaired_code"] = repair_result
+        results["repair_time"] = repair_time
+
+        # -----------------------------
+        # Calculate Quality Scores
+        # -----------------------------
+        scorer = QualityScore()
+
+        review_score = scorer.score(results["review"])
+        security_score = scorer.score(results["security"])
+        performance_score = scorer.score(results["performance"])
+        documentation_score = scorer.score(results["documentation"])
+
+        overall_score = scorer.overall([
+            review_score,
+            security_score,
+            performance_score,
+            documentation_score
+        ])
+
+        grade = scorer.grade(overall_score)
+
+        results["review_score"] = review_score
+        results["security_score"] = security_score
+        results["performance_score"] = performance_score
+        results["documentation_score"] = documentation_score
+        results["overall_score"] = overall_score
+        results["grade"] = grade
+
+        return results

@@ -1,12 +1,22 @@
 import json
+import re
 
 
-def parse_json(text: str):
+def parse_json(response: str):
+    """
+    Parse JSON returned by the LLM.
 
-    try:
+    Removes markdown code fences if present.
+    """
 
-        return json.loads(text)
+    response = response.strip()
 
-    except json.JSONDecodeError:
+    # Remove ```json
+    response = re.sub(r"^```json", "", response)
 
-        return None
+    # Remove ```
+    response = re.sub(r"```$", "", response)
+
+    response = response.strip()
+
+    return json.loads(response)
