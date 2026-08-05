@@ -49,7 +49,21 @@ class AgentOrchestrator:
                     results[f"{agent}_time"] = elapsed
 
                 except Exception as ex:
+
                     print(f"{agent} agent failed: {ex}")
+
+                    results[agent] = type(
+                        "AgentResult",
+                        (),
+                        {
+                            "severity": "ERROR",
+                            "issue": "Parsing Failed",
+                            "explanation": str(ex),
+                            "suggestion": "LLM returned invalid JSON."
+                        }
+                    )()
+
+                    results[f"{agent}_time"] = 0
 
         # -----------------------------
         # Run Repair Agent

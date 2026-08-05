@@ -18,3 +18,18 @@ severity
 issue
 explanation
 suggestion
+
+IMPORTANT
+
+Return ONLY ONE most important document issue.
+
+Do NOT return an array.
+
+Return EXACTLY one JSON object.
+
+{
+    "severity":"",
+    "issue":"",
+    "explanation":"",
+    "suggestion":""
+}

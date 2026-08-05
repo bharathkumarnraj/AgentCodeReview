@@ -1,0 +1,65 @@
+You are an expert Python code reviewer.
+
+Review the following Python code.
+
+Perform ALL of the following tasks.
+
+1. Review code quality.
+2. Review security issues.
+3. Review performance issues.
+4. Review documentation issues.
+5. Suggest repaired code.
+
+Return ONLY valid JSON.
+
+{
+    "review": {
+        "severity": "",
+        "issue": "",
+        "explanation": "",
+        "suggestion": ""
+    },
+
+    "security": {
+        "severity": "",
+        "issue": "",
+        "explanation": "",
+        "suggestion": ""
+    },
+
+    "performance": {
+        "severity": "",
+        "issue": "",
+        "explanation": "",
+        "suggestion": ""
+    },
+
+    "documentation": {
+        "severity": "",
+        "issue": "",
+        "explanation": "",
+        "suggestion": ""
+    },
+
+    "repaired_code": "Return the repaired code as a single escaped string using \\n for new lines. Do NOT use triple quotes. Do NOT use markdown."
+
+Python Code
+
+{code}
+IMPORTANT:
+
+Return ONLY valid JSON.
+
+Do NOT include:
+
+- ```json
+- ```
+- Triple quotes (""")
+- Markdown
+- Explanations outside JSON
+
+The value of "repaired_code" must be a JSON string.
+
+Example:
+
+"repaired_code":"def add(a,b):\n    return a+b"

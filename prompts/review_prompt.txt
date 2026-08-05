@@ -28,3 +28,18 @@ Do not include code fences.
 Do not include any extra text.
 
 Source Code:
+
+IMPORTANT
+
+Return ONLY ONE most important Review issue.
+
+Do NOT return an array.
+
+Return EXACTLY one JSON object.
+
+{
+    "severity":"",
+    "issue":"",
+    "explanation":"",
+    "suggestion":""
+}

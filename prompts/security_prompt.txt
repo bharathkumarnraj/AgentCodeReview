@@ -10,3 +10,20 @@ severity
 issue
 explanation
 suggestion
+
+IMPORTANT
+
+Return ONLY ONE most important security issue.
+
+Do NOT return an array.
+
+Do NOT return multiple issues.
+
+Return EXACTLY this JSON object.
+
+{
+    "severity":"",
+    "issue":"",
+    "explanation":"",
+    "suggestion":""
+}
